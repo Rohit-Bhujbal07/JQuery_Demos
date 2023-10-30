@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="d1"></div>
+    <script>
+        var d1=document.getElementById("d1");
+        var arr=[{rollno:1,name:"AAA"},
+                 {rollno:2,name:"BBB"},
+                 {rollno:3,name:"CCC"}];
+
+                 //arr to json obj
+                 var obj=JSON.stringify(arr);
+                 console.log(obj);
+
+                 //json obj to native obj i.e array
+                 var objArr=JSON.parse(obj);
+                 console.log(objArr);
+                 d1.innerHTML=objArr[0].rollno;
+    </script>
+</body>
+</html>

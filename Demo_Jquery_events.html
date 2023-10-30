@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <style>
+            div{
+                width:100px;
+                height:100px;
+                border:2px solid black;
+                background-color: aquamarine;
+            }
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script>
+             $(document).ready(function(){
+                function fun2(event){
+                    alert("hello");
+                }
+                function fun1(event){
+                    if(event.type=="click"){
+                        console.log("Button is clicked");
+                    }
+                    else if(event.type=="mouseover"){
+                        $(this).css("background-color","red");
+                    }
+                    else if(event.type=="mouseout"){
+                        $(this).css("background-color","blue");
+                    }
+                }
+                $("#btn1").on({"click":fun1,
+                                "mouseover":fun1,
+                               "mouseout":fun1}).on("click",fun2);
+
+                $("#btn2").on("click",function(){
+                    //remove handler
+                    $("btn1").off("click",fun2);
+                    console.log("removed!!");
+                }) 
+                //one event  
+                $("#btnOne").one("click",function(){
+                    alert("its clicked");
+                }) 
+                //multiple events
+                $("#btnOne").one("click mouseover mouseout",fun1); 
+                
+                $("#d1").click(function(event){
+                    console.log(event.pageX,event.pageY);
+                })
+                // which method return unicode
+                $("#txtName").keypress(function(event){
+                    console.log(event.which);
+                })
+
+                var arr=[{prodName:"AAA",prodPrice:100},
+                {prodName:"BBB",prodPrice:200},
+                {prodName:"CCC",prodPrice:300},
+                {prodName:"DDD",prodPrice:400}];
+
+                var obj=JSON.stringify(arr);//arr to JSON
+                
+                console.log(obj);
+                $("#d1").html(obj);
+                  //JSON to array
+                var arr2=$.parseJSON(obj);
+                console.log(arr2);
+
+
+             })
+        </script>
+    </head>
+    <body>
+        <input type="button" value="click" id="btn1">
+        <input type="button" value="Remove Handler" id="btn2">
+        <input type="button" value="One Handler" id="btnOne">
+        <div id="d1"></div>
+        <input type="text" id="txtName">
+    </body>
+</html>

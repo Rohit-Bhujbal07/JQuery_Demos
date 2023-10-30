@@ -1,0 +1,116 @@
+<html>
+    <head>
+        <style>
+             div{
+                width: 200px;
+                height: 200px;
+                border: 2px solid black;
+                /*display: none;*/
+                visibility: hidden;
+            }
+
+        </style>
+         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+         <script>
+         $(document).ready(function(){
+            var productArr=[];
+            var list=$("#list");
+            list.on("click","li",funClick);
+
+            $("#btnInsert").click(funInsert);
+            $("#btnUpdate").click(funUpdate);
+            $("#btnDelete").click(funDelete);
+            $("#btnCart").click(funCart);
+
+            function Product(name,value){
+                this.prodName=name;
+                this.Price=value;
+            }
+
+            function funInsert(){
+                var txtName= $("#txtName").val();
+                var txtPrice= $("#txtPrice").val();
+                var obj=new Product(txtName,txtPrice);
+                productArr.push(obj);
+                display();
+                
+            }
+            function display(){
+                var str="";
+                for(i=0;i<productArr.length;i++){
+                    str+="<li>"+productArr[i].prodName+"*"+productArr[i].Price+"</li>";
+                }
+                list.html(str);
+            }
+
+            function funClick(){
+              var str=$(this).text();
+              arr=str.split("*");
+              $("#txtName").val(arr[0]);
+              $("#txtPrice").val(arr[1]);
+              $("#txtName").attr("disabled",true);
+
+            }
+
+            function funUpdate(){
+                var name=$("#txtName").val();
+                var newPrice=$("#txtPrice").val();
+                for(i=0;i<productArr.length;i++){
+                    if(name==productArr[i].prodName){
+                        productArr[i].Price=newPrice;
+                    break;                    
+                }
+            }
+            $("#txtName").val("");
+            $("#txtPrice").val("");
+            $("#txtName").attr("disabled",false);
+            display();
+          }
+
+          function funDelete(){
+             var txtName= $("#txtName").val();
+
+             for(i=0;i<productArr.length;i++){
+               if(productArr[i].prodName == txtName){
+                 productArr.splice(i,1);
+               }
+             }
+             $("#txtName").val("");
+            $("#txtPrice").val("");
+            $("#txtName").attr("disabled",false);
+            display();
+          }
+          var d1=$("#d1");
+          var sum=0;
+          var str1="";
+          
+          function funCart(){
+          var txtName=$("#txtName").val();
+          var txtPrice=$("#txtPrice").val();
+
+           for(i=0;i<productArr.length;i++){
+             if(productArr[i].prodName==txtName){
+                 str1+="<br>"+productArr[i].prodName+"--"+productArr[i].Price;
+                 sum+=parseInt(productArr[i].Price);
+             }
+          }
+           d1.css("visibility","visible");
+           d1.html(str1+"<br>Bill="+sum);
+          }
+
+         })
+
+         </script>
+    </head>
+    <body>
+        Product Name:<input type="text" id="txtName"><br>
+        Price:<input type="text" id="txtPrice"><br>
+        <input type="button" value="Insert" id="btnInsert">
+        <input type="button" value="Update" id="btnUpdate">
+        <input type="button" value="Delete" id="btnDelete">
+        <input type="button" value="AddToCart" id="btnCart">
+        <ul id="list"></ul>
+
+        <div id="d1"></div>
+    </body>
+</html>

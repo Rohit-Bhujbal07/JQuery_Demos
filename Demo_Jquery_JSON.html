@@ -1,0 +1,137 @@
+<html>
+    <head>
+        <style></style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+              var d1=$("#d1");
+              $("#btn1").click(function(){
+                $.get("https://jsonplaceholder.typicode.com/todos/",function(data,status){
+                        var str="<table border='2'><tr><td>Id</td><td>Title</td></tr>";
+                        $.each(data,function(i,v){
+                            str+="<tr><td>"+v.id+"</td><td>"+v.title+"</td></tr>";
+                        })
+                        str+="</table>";
+                        d1.html(str);
+                    })
+              })
+
+              $("#btn11").click(function(){
+                $.getJSON("https://jsonplaceholder.typicode.com/todos/",function(data){
+                    console.log(data);
+                })
+              })
+
+              $("#btn2").click(function(){
+                var op=$("#sel").val();
+                console.log(op);
+                var x="?completed="+op;
+                var txtId=1;
+                $.get("https://jsonplaceholder.typicode.com/todos/"+txtId,function(data){
+                    var str="<table border='2'><tr><td>Id</td><td>Title</td></tr>";
+                        $.each(data,function(i,v){
+                            str+="<tr><td>"+i+"</td><td>"+v+"</td></tr>";
+                        })
+                        str+="</table>";
+                        d1.html(str);
+                })
+              })
+              /*
+              $.get("https://jsonplaceholder.typicode.com/todos/"+x,function(data){
+                var str="<table border='2'><tr><td>Id</td><td>Title</td></tr>";
+                        $.each(data,function(i,v){
+                            str+="<tr><td>"+i+"</td><td>"+v+"</td></tr>";
+                        })
+                        str+="</table>";
+                        d1.html(str);
+              })
+
+              */
+             $("#btn3").click(function(){
+                var txtId=$("#txtId").val();
+                var txtTitle=$("#txtTitle").val();
+                var obj=JSON.stringify({id:txtId,title:txtTitle});
+                console.log(obj);
+                $.post("https://jsonplaceholder.typicode.com/posts",obj,function(data){
+                    console.log(data+"Data Inserted");
+                })
+             })
+
+             $("#btn4").click(function(){
+                var txtId=$("#txtId").val();
+                var txtTitle=$("#txtTitle").val();
+                var obj=JSON.stringify({id:txtId,title:txtTitle});
+                $.ajax({
+                    url:"https://jsonplaceholder.typicode.com/posts/"+txtId,
+                    method:"put",
+                    data:obj,
+                    success:function(data){
+                        console.log(data+"Record updated!!");
+                    },
+                    error:function(data){
+                        console.log("Error"+data);
+                    }
+                })
+             })
+             $("#btn5").click(function(){
+                var txtId=$("#txtId").val();
+                $.ajax({
+                    url:"https://jsonplaceholder.typicode.com/posts/"+txtId,
+                    method:"delete",
+                    success:function(data){
+                        console.log(data+"Record Deleted!!");
+                    },
+                    error:function(data){
+                        console.log("Error"+data);
+                    }
+                })
+             })
+             $("#btn33").click(function(){
+                //js ajax req
+
+                var obj= new XMLHttpRequest();
+                obj.open("get","https://jsonplaceholder.typicode.com/todos/");
+                obj.send();
+                obj.onreadystatechange=function(){
+                    if(obj.readyState==4 && obj.status==200){
+                        var result=obj.responseText;
+                        console.log(result);
+                    }
+                } 
+             })
+            })
+        </script>
+    </head>
+    <body>
+        <input type="button" value="Get Data" id="btn1">
+        <input type="button" value="GetJSONData" id="btn11">
+        <hr>
+        Status:<select id="sel">
+            <option value="true">Completed</option>
+            <option value="false">Pending</option>
+        </select>
+        <input type="button" value="View" id="btn2">
+        <hr>
+        Id:<input type="text" id="txtId"><br>
+        Title:<input type="text" id="txtTitle"><br>
+        <input type="button" value="Insert" id="btn3">
+        <input type="button" value="Update" id="btn4">
+        <input type="button" value="Delete" id="btn5">
+        <input type="button" value="JsGetAJAX" id="btn33">
+        <hr>
+
+        <form action="https://jsonplaceholder.typicode.com/todos/" method="get">
+            id:<input type="text" id="txtId" name="id"><br>
+            <input type="submit" value="Search" id="btnSubmit">
+
+        </form>
+        <hr>
+        <form action="https://jsonplaceholder.typicode.com/posts/" method="post">
+            id:<input type="text" id="txtId" name="id"><br>
+            title:<input type="text" id="txtTitle" name="title"><br>
+            <input type="submit" id="btn6" value="InsertSubmit">
+        </form>
+        
+        <div id="d1"></div>
+    </body>
+</html>

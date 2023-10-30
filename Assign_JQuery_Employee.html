@@ -1,0 +1,98 @@
+<html>
+    <head>
+        <style>
+
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+               var d1=$("#d1");
+               $("#btn1").click(function(){
+                  var str="<tr><td>Id</td><td>Username</td><td>Email</td><td>Designation</td></tr>";
+                 
+                  $.get("https://api.onlinewebtutorblog.com/employees",function(data){
+                    var arr=data.data;
+                    console.log(data.data[0].id);
+                    for(i=0;i<20;i++){
+                        if(arr[i].gender=="Female"){
+                        str+="<tr><td>"+arr[i].id+"</td><td>"+arr[i].username+"</td><td>"+arr[i].email+"</td></tr>";
+                    }
+                    else if(arr[i].designation=="Freelancer"){
+                        str+="<tr><td>"+arr[i].id+"</td><td>"+arr[i].username+"</td><td>"+arr[i].email+"</td><td>"+arr[i].designation+"</td></tr>";
+                    }
+
+                }
+                    $("table").html(str);
+                  })
+               })
+               
+               
+
+               var obj={
+                    username:"test",
+                    name:"test",
+                    email:"test@gmail.com",
+                    gender:"Male",
+                    designation:"test",
+                    phone_number:10101010101,
+                    complete_address:"pune"
+
+                 };
+                 
+                 console.log(obj);
+                 $("#btn2").click(function(){
+                 $.post("https://api.onlinewebtutorblog.com/employees",obj,function(data){
+                 console.log(data);
+                })
+              })
+               
+               var txtId=2;
+               $("#btn3").click(function(){
+               $.ajax({
+                url:"https://api.onlinewebtutorblog.com/employees/"+txtId,
+                type:"PUT",
+                data:obj,
+                success:function(data){
+                    console.log(data);
+                }
+               }) 
+            })
+               
+               $("#btn4").click(function(){
+               $.ajax({
+                url:"https://api.onlinewebtutorblog.com/employees/"+txtId,
+                type:"DELETE",
+                success:function(data){
+                    console.log(data);
+                }
+               })
+            })
+
+           /* $("#sel").click(function(){
+                $.get("https://api.onlinewebtutorblog.com/employees",function(data){
+                    var arr=data.data;
+                    if(sel=="Male"){
+                        str+="<tr><td>"+arr[i].id+"</td><td>"+arr[i].username+"</td><td>"+arr[i].email+"</td></tr>";
+                    }
+                    else if(arr[i].gender=="Female"){
+                        str+="<tr><td>"+arr[i].id+"</td><td>"+arr[i].username+"</td><td>"+arr[i].email+"</td></tr>";
+                    }
+                })
+            })
+              */
+            })
+        </script>
+    </head>
+    <body>
+        <input type="button" value="Get Data" id="btn1">
+        <input type="button" value="Insert Data" id="btn2">
+        <input type="button" value="Update Data" id="btn3">
+        <input type="button" value="Delete data" id="btn4">
+        <table id="tbl1" border="2"></table>
+        <div id="d1"></div>
+        <select id="sel" >
+            <option>Male</option>
+            <option>Female</option>
+        </select>
+    </body>
+</html>

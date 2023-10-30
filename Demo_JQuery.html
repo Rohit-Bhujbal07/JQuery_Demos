@@ -1,0 +1,76 @@
+<html>
+    <head>
+        <style>
+              div{
+                color:green;
+              }
+              .A{
+                color:bisque;
+                background-color: blueviolet;
+              }
+              .B{
+                color:aquamarine;
+                background-color: brown;
+              }
+              #d1{
+                width:100px;
+                height: 100px;
+                border:2px solid green;
+              }
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function(){
+                var d1=$("div");
+                $("#btn1").click(function(){
+                    /*alert(d1.html());
+                    $("div").html("<strong>This is JQuery</strong>");
+                    $("div").text("<strong>This is JQuery</strong>");
+                    alert(d1.text());
+                    */
+                   // d1.css("background-color","yellow");
+                    //alert(d1.css("color"));
+                   // d1.css({"background-color":"yellow","color":"red"});
+                   // d1.addClass("A");
+                })
+
+                //$("a").attr("href","http://www.linkdin.com");
+                $("a").attr({href:"http://www.linkdin.com",title:"newHref"});
+                alert($("a").attr("href"));
+
+                $("#btn2").click(function(){
+                    var div=$("#d1");
+                    if(div.hasClass("A")){
+                        div.removeClass("A");
+                        div.addClass("B");
+                    }
+                    else if(div.hasClass("B")){
+                       div.removeClass("B");
+                       div.addClass("A");
+                    }
+                })
+                $("#btnAdd").click(function(){
+                    var num1=$("txtNum1").val();
+                    var num2=$("txtNum2").val();
+                    var sum=parseInt(num1)+parseInt(num2);
+                    $("p").html("Addition :"+sum);
+                    $("#txtRes").val(sum);
+                })
+            })
+         </script>
+    </head>
+    <body>
+        <div>This is Div1</div>
+        <a href="http://www.google.com">Google</a>
+        <input type="button" id="btn1" value="Click">
+        <div id="d1" class="A"></div>
+        <input type="button" id="btn2" value="Apply Class">
+        <hr>
+
+        Num1:<input type="text" id="txtNum1"><br>
+        Num2:<input type="text" id="txtNum2"><br>
+        <input type="button" id="btnAdd" value="Add"><br>
+        Result:<input type="text" id="txtRes" readonly>
+        <p></p>
+    </body>
+</html>
